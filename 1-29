@@ -1,0 +1,649 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+        static void Main()
+        {
+            while (true)
+            {
+                Console.WriteLine("\nВыберите задачу (1-29) или 0 для выхода:");
+                int task = int.Parse(Console.ReadLine());
+                if (task == 0) break;
+
+                switch (task)
+                {
+                    case 1: Task1(); break;
+                    case 2: Task2(); break;
+                    case 3: Task3(); break;
+                    case 4: Task4(); break;
+                    case 5: Task5(); break;
+                    case 6: Task6(); break;
+                    case 7: Task7(); break;
+                    case 8: Task8(); break;
+                    case 9: Task9(); break;
+                    case 10: Task10(); break;
+                    case 11: Task11(); break;
+                    case 12: Task12(); break;
+                    case 13: Task13(); break;
+                    case 14: Task14(); break;
+                    case 15: Task15(); break;
+                    case 16: Task16(); break;
+                    case 17: Task17(); break;
+                    case 18: Task18(); break;
+                    case 19: Task19(); break;
+                    case 20: Task20(); break;
+                    case 21: Task21(); break;
+                    case 22: Task22(); break;
+                    case 23: Task23(); break;
+                    case 24: Task24(); break;
+                    case 25: Task25(); break;
+                    case 26: Task26(); break;
+                    case 27: Task27(); break;
+                    case 28: Task28(); break;
+                    case 29: Task29(); break;
+                    default: Console.WriteLine("Неверный номер задачи!"); break;
+                }
+            }
+        }
+
+        // Задача 1: Количество четных элементов
+        static void Task1()
+        {
+            Console.WriteLine("\nЗадача 1: Подсчет четных элементов");
+            int[] array = new int[14];
+            Console.WriteLine("Введите 14 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int evenCount = array.Count(x => x % 2 == 0);
+            Console.WriteLine($"\nКоличество четных элементов: {evenCount}");
+        }
+
+        // Задача 2: Замена пятого элемента средним арифметическим
+        static void Task2()
+        {
+            Console.WriteLine("\nЗадача 2: Замена пятого элемента средним арифметическим");
+            int[] array = new int[12];
+            Console.WriteLine("Введите 12 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            double average = array.Average();
+            int[] newArray = (int[])array.Clone();
+            newArray[4] = (int)Math.Round(average);
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine($"Среднее арифметическое: {average:F2}");
+            Console.WriteLine("Новый массив: [" + string.Join(", ", newArray) + "]");
+        }
+
+        // Задача 3: Количество элементов, |значение| которых больше среднего
+        static void Task3()
+        {
+            Console.WriteLine("\nЗадача 3: Подсчет элементов с |значением| > среднего");
+            int[] array = new int[11];
+            Console.WriteLine("Введите 11 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            double average = array.Average();
+            int count = array.Count(x => Math.Abs(x) > average);
+            Console.WriteLine($"\nСреднее арифметическое: {average:F2}");
+            Console.WriteLine($"Количество элементов: {count}");
+        }
+
+        // Задача 4: Поменять местами максимальный и первый элементы
+        static void Task4()
+        {
+            Console.WriteLine("\nЗадача 4: Обмен максимального и первого элементов");
+            int[] array = new int[10];
+            Console.WriteLine("Введите 10 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int maxIndex = 0;
+            for (int i = 1; i < array.Length; i++)
+                if (array[i] > array[maxIndex]) maxIndex = i;
+
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            int temp = array[maxIndex];
+            array[maxIndex] = array[0];
+            array[0] = temp;
+            Console.WriteLine("После обмена: [" + string.Join(", ", array) + "]");
+        }
+
+        // Задача 5: Поменять местами максимальный и минимальный элементы
+        static void Task5()
+        {
+            Console.WriteLine("\nЗадача 5: Обмен максимального и минимального элементов");
+            int[] array = new int[9];
+            Console.WriteLine("Введите 9 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int maxIndex = 0, minIndex = 0;
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i] > array[maxIndex]) maxIndex = i;
+                if (array[i] < array[minIndex]) minIndex = i;
+            }
+
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            if (maxIndex != minIndex)
+            {
+                int temp = array[maxIndex];
+                array[maxIndex] = array[minIndex];
+                array[minIndex] = temp;
+                Console.WriteLine("После обмена: [" + string.Join(", ", array) + "]");
+            }
+            else
+                Console.WriteLine("Все элементы одинаковы.");
+        }
+
+        // Задача 6: Сравнение количества четных и нечетных элементов
+        static void Task6()
+        {
+            Console.WriteLine("\nЗадача 6: Сравнение четных и нечетных элементов");
+            int[] array = new int[20];
+            Console.WriteLine("Введите 20 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int evenCount = array.Count(x => x % 2 == 0);
+            int oddCount = array.Length - evenCount;
+            Console.WriteLine($"\nЧетных: {evenCount}, Нечетных: {oddCount}");
+            Console.WriteLine(evenCount > oddCount ? "Четных больше" : evenCount < oddCount ? "Нечетных больше" : "Четных и нечетных поровну");
+        }
+
+        // Задача 7: Количество элементов больше первого
+        static void Task7()
+        {
+            Console.WriteLine("\nЗадача 7: Подсчет элементов больше первого");
+            double[] array = new double[15];
+            Console.WriteLine("Введите 15 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            int count = array.Skip(1).Count(x => x > array[0]);
+            Console.WriteLine($"\nПервый элемент: {array[0]}");
+            Console.WriteLine($"Количество элементов больше первого: {count}");
+        }
+
+        // Задача 8: Индексы максимального и минимального элементов
+        static void Task8()
+        {
+            Console.WriteLine("\nЗадача 8: Индексы максимального и минимального элементов");
+            double[] array = new double[16];
+            Console.WriteLine("Введите 16 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            int maxIndex = 0, minIndex = 0;
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i] > array[maxIndex]) maxIndex = i;
+                if (array[i] < array[minIndex]) minIndex = i;
+            }
+
+            Console.WriteLine($"\nМаксимальный элемент: {array[maxIndex]} (индекс {maxIndex})");
+            Console.WriteLine($"Минимальный элемент: {array[minIndex]} (индекс {minIndex})");
+        }
+
+        // Задача 9: Разность элементов и среднего арифметического
+        static void Task9()
+        {
+            Console.WriteLine("\nЗадача 9: Разность элементов и среднего арифметического");
+            int[] array = new int[15];
+            Console.WriteLine("Введите 15 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            double average = array.Average();
+            double[] newArray = array.Select(x => x - average).ToArray();
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine($"Среднее арифметическое: {average:F2}");
+            Console.WriteLine("Новый массив: [" + string.Join(", ", newArray.Select(x => x.ToString("F2"))) + "]");
+        }
+
+        // Задача 10: Сумма элементов, |значение| которых больше среднего модулей отрицательных
+        static void Task10()
+        {
+            Console.WriteLine("\nЗадача 10: Сумма элементов с |значением| > среднего модулей отрицательных");
+            int[] array = new int[17];
+            Console.WriteLine("Введите 17 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            double negAverage = array.Where(x => x < 0).Select(x => Math.Abs(x)).DefaultIfEmpty(0).Average();
+            int sum = array.Where(x => Math.Abs(x) > negAverage).Sum();
+            Console.WriteLine($"\nСреднее модулей отрицательных: {negAverage:F2}");
+            Console.WriteLine($"Сумма элементов: {sum}");
+        }
+
+        // Задача 11: Количество и сумма четных положительных элементов
+        static void Task11()
+        {
+            Console.WriteLine("\nЗадача 11: Количество и сумма четных положительных элементов");
+            int[] array = new int[14];
+            Console.WriteLine("Введите 14 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int count = array.Count(x => x > 0 && x % 2 == 0);
+            int sum = array.Where(x => x > 0 && x % 2 == 0).Sum();
+            Console.WriteLine($"\nКоличество четных положительных: {count}");
+            Console.WriteLine($"Сумма четных положительных: {sum}");
+        }
+
+        // Задача 12: Сортировка по убыванию и сумма мин/макс
+        static void Task12()
+        {
+            Console.WriteLine("\nЗадача 12: Сортировка по убыванию и сумма мин/макс");
+            double[] array = new double[12];
+            Console.WriteLine("Введите 12 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            double[] sortedArray = array.OrderByDescending(x => x).ToArray();
+            double sum = sortedArray[0] + sortedArray[sortedArray.Length - 1];
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine("Отсортированный массив: [" + string.Join(", ", sortedArray) + "]");
+            Console.WriteLine($"Сумма максимального и минимального: {sum:F2}");
+        }
+
+        // Задача 13: Сумма и разность максимального и минимального
+        static void Task13()
+        {
+            Console.WriteLine("\nЗадача 13: Сумма и разность максимального и минимального");
+            int[] array = new int[15];
+            Console.WriteLine("Введите 15 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int max = array.Max(), min = array.Min();
+            int sum = max + min, diff = max - min;
+            Console.WriteLine($"\nМаксимальный: {max}, Минимальный: {min}");
+            Console.WriteLine($"Сумма: {sum}, Разность: {diff}");
+        }
+
+        // Задача 14: Замена элементов, кратных трем, суммой нечетных
+        static void Task14()
+        {
+            Console.WriteLine("\nЗадача 14: Замена элементов, кратных трем, суммой нечетных");
+            int[] array = new int[17];
+            Console.WriteLine("Введите 17 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int oddSum = array.Where(x => x % 2 != 0).Sum();
+            int[] newArray = (int[])array.Clone();
+            for (int i = 0; i < newArray.Length; i++)
+                if (newArray[i] % 3 == 0) newArray[i] = oddSum;
+
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine($"Сумма нечетных: {oddSum}");
+            Console.WriteLine("Новый массив: [" + string.Join(", ", newArray) + "]");
+        }
+
+        // Задача 15: Сортировка 1-7 по возрастанию, 8-14 по убыванию
+        static void Task15()
+        {
+            Console.WriteLine("\nЗадача 15: Сортировка 1-7 по возрастанию, 8-14 по убыванию");
+            double[] array = new double[14];
+            Console.WriteLine("Введите 14 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            double[] newArray = (double[])array.Clone();
+            Array.Sort(newArray, 0, 7);
+            Array.Sort(newArray, 7, 7);
+            Array.Reverse(newArray, 7, 7);
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine("Отсортированный массив: [" + string.Join(", ", newArray) + "]");
+        }
+
+        // Задача 16: Количество элементов между максимальным и минимальным
+        static void Task16()
+        {
+            Console.WriteLine("\nЗадача 16: Количество элементов между максимальным и минимальным");
+            double[] array = new double[12];
+            Console.WriteLine("Введите 12 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            int maxIndex = Array.IndexOf(array, array.Max());
+            int minIndex = Array.IndexOf(array, array.Min());
+            int count = Math.Abs(maxIndex - minIndex) - 1;
+            Console.WriteLine($"\nМаксимальный элемент: {array[maxIndex]} (индекс {maxIndex})");
+            Console.WriteLine($"Минимальный элемент: {array[minIndex]} (индекс {minIndex})");
+            Console.WriteLine($"Количество элементов между ними: {(count >= 0 ? count : 0)}");
+        }
+
+        // Задача 17: Количество отрицательных, произведение положительных, количество нулевых
+        static void Task17()
+        {
+            Console.WriteLine("\nЗадача 17: Количество отрицательных, произведение положительных, количество нулевых");
+            int[] array = new int[15];
+            Console.WriteLine("Введите 15 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int negativeCount = array.Count(x => x < 0);
+            long positiveProduct = array.Where(x => x > 0).Aggregate(1L, (acc, x) => acc * x);
+            int zeroCount = array.Count(x => x == 0);
+            Console.WriteLine($"\nКоличество отрицательных: {negativeCount}");
+            Console.WriteLine($"Произведение положительных: {positiveProduct}");
+            Console.WriteLine($"Количество нулевых: {zeroCount}");
+        }
+
+        // Задача 18: Границы интервала значений элементов
+        static void Task18()
+        {
+            Console.WriteLine("\nЗадача 18: Границы интервала значений элементов");
+            double[] array = new double[12];
+            Console.WriteLine("Введите 12 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            double min = array.Min(), max = array.Max();
+            Console.WriteLine($"\nИнтервал значений: [{min:F2}, {max:F2}]");
+        }
+
+        // Задача 19: Сумма элементов до первого отрицательного
+        static void Task19()
+        {
+            Console.WriteLine("\nЗадача 19: Сумма элементов до первого отрицательного");
+            int[] array = new int[19];
+            Console.WriteLine("Введите 19 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int sum = 0;
+            bool hasNegative = false;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] < 0)
+                {
+                    hasNegative = true;
+                    break;
+                }
+                sum += array[i];
+            }
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine(hasNegative ? $"Сумма до первого отрицательного: {sum}" : "Отрицательных элементов нет");
+        }
+
+        // Задача 20: Замена кратных трем на нули и подсчет замен
+        static void Task20()
+        {
+            Console.WriteLine("\nЗадача 20: Замена кратных трем на нули и подсчет замен");
+            int[] array = new int[16];
+            Console.WriteLine("Введите 16 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int[] newArray = (int[])array.Clone();
+            int replaceCount = 0;
+            for (int i = 0; i < newArray.Length; i++)
+            {
+                if (newArray[i] % 3 == 0)
+                {
+                    newArray[i] = 0;
+                    replaceCount++;
+                }
+            }
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine("Новый массив: [" + string.Join(", ", newArray) + "]");
+            Console.WriteLine($"Количество замен: {replaceCount}");
+        }
+
+        // Задача 21: Увеличить минимальный элемент в три раза и поменять с последним
+        static void Task21()
+        {
+            Console.WriteLine("\nЗадача 21: Увеличить минимальный элемент в три раза и поменять с последним");
+            double[] array = new double[12];
+            Console.WriteLine("Введите 12 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            int minIndex = Array.IndexOf(array, array.Min());
+            array[minIndex] *= 3;
+            double temp = array[minIndex];
+            array[minIndex] = array[array.Length - 1];
+            array[array.Length - 1] = temp;
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine("После обработки: [" + string.Join(", ", array) + "]");
+        }
+
+        // Задача 22: Перевернуть массив
+        static void Task22()
+        {
+            Console.WriteLine("\nЗадача 22: Перевернуть массив");
+            double[] array = new double[15];
+            Console.WriteLine("Введите 15 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            Array.Reverse(array);
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine("Перевернутый массив: [" + string.Join(", ", array) + "]");
+        }
+
+        // Задача 23: Сумма элементов с четными индексами и произведение нечетных по значению
+        static void Task23()
+        {
+            Console.WriteLine("\nЗадача 23: Сумма элементов с четными индексами и произведение нечетных по значению");
+            int[] array = new int[14];
+            Console.WriteLine("Введите 14 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int evenIndexSum = 0;
+            long oddValueProduct = 1;
+            bool hasOdd = false;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (i % 2 == 0) evenIndexSum += array[i];
+                if (array[i] % 2 != 0)
+                {
+                    oddValueProduct *= array[i];
+                    hasOdd = true;
+                }
+            }
+            Console.WriteLine($"\nСумма элементов с четными индексами: {evenIndexSum}");
+            Console.WriteLine(hasOdd ? $"Произведение нечетных по значению: {oddValueProduct}" : "Нечетных элементов нет");
+        }
+
+        // Задача 24: Количество и сумма элементов меньше последнего
+        static void Task24()
+        {
+            Console.WriteLine("\nЗадача 24: Количество и сумма элементов меньше последнего");
+            double[] array = new double[12];
+            Console.WriteLine("Введите 12 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            double last = array[array.Length - 1];
+            int count = array.Count(x => x < last);
+            double sum = array.Where(x => x < last).Sum();
+            Console.WriteLine($"\nПоследний элемент: {last:F2}");
+            Console.WriteLine($"Количество элементов меньше последнего: {count}");
+            Console.WriteLine($"Сумма элементов меньше последнего: {sum:F2}");
+        }
+
+        // Задача 25: Разность элементов и суммы положительных
+        static void Task25()
+        {
+            Console.WriteLine("\nЗадача 25: Разность элементов и суммы положительных");
+            int[] array = new int[15];
+            Console.WriteLine("Введите 15 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int positiveSum = array.Where(x => x > 0).Sum();
+            double[] newArray = array.Select(x => (double)x - positiveSum).ToArray();
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine($"Сумма положительных: {positiveSum}");
+            Console.WriteLine("Новый массив: [" + string.Join(", ", newArray.Select(x => x.ToString("F2"))) + "]");
+        }
+
+        // Задача 26: Разность произведения положительных и произведения модулей отрицательных
+        static void Task26()
+        {
+            Console.WriteLine("\nЗадача 26: Разность произведения положительных и произведения модулей отрицательных");
+            double[] array = new double[15];
+            Console.WriteLine("Введите 15 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            double positiveProduct = array.Where(x => x > 0).Aggregate(1.0, (acc, x) => acc * x);
+            double negativeAbsProduct = array.Where(x => x < 0).Select(x => Math.Abs(x)).Aggregate(1.0, (acc, x) => acc * x);
+            double difference = positiveProduct - negativeAbsProduct;
+            Console.WriteLine($"\nПроизведение положительных: {positiveProduct:F2}");
+            Console.WriteLine($"Произведение модулей отрицательных: {negativeAbsProduct:F2}");
+            Console.WriteLine($"Разность: {difference:F2}");
+        }
+
+        // Задача 27: Замена четных по значению на максимальный элемент
+        static void Task27()
+        {
+            Console.WriteLine("\nЗадача 27: Замена четных по значению на максимальный элемент");
+            int[] array = new int[19];
+            Console.WriteLine("Введите 19 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            int max = array.Max();
+            int[] newArray = array.Select(x => x % 2 == 0 ? max : x).ToArray();
+            Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+            Console.WriteLine($"Максимальный элемент: {max}");
+            Console.WriteLine("Новый массив: [" + string.Join(", ", newArray) + "]");
+        }
+
+        // Задача 28: Сумма и количество элементов, |значение| которых больше среднего положительных
+        static void Task28()
+        {
+            Console.WriteLine("\nЗадача 28: Сумма и количество элементов, |значение| которых больше среднего положительных");
+            int[] array = new int[17];
+            Console.WriteLine("Введите 17 целых чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = int.Parse(Console.ReadLine());
+            }
+
+            double positiveAvg = array.Where(x => x > 0).DefaultIfEmpty(0).Average();
+            int count = array.Count(x => Math.Abs(x) > positiveAvg);
+            int sum = array.Where(x => Math.Abs(x) > positiveAvg).Sum();
+            Console.WriteLine($"\nСреднее положительных: {positiveAvg:F2}");
+            Console.WriteLine($"Количество элементов: {count}");
+            Console.WriteLine($"Сумма элементов: {sum}");
+        }
+
+        // Задача 29: Частное произведения положительных и суммы модулей отрицательных
+        static void Task29()
+        {
+            Console.WriteLine("\nЗадача 29: Частное произведения положительных и суммы модулей отрицательных");
+            double[] array = new double[18];
+            Console.WriteLine("Введите 18 вещественных чисел:");
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"Элемент {i + 1}: ");
+                array[i] = double.Parse(Console.ReadLine());
+            }
+
+            double positiveProduct = array.Where(x => x > 0).Aggregate(1.0, (acc, x) => acc * x);
+            double negativeAbsSum = array.Where(x => x < 0).Select(x => Math.Abs(x)).Sum();
+            double quotient = negativeAbsSum != 0 ? positiveProduct / negativeAbsSum : double.PositiveInfinity;
+            Console.WriteLine($"\nПроизведение положительных: {positiveProduct:F2}");
+            Console.WriteLine($"Сумма модулей отрицательных: {negativeAbsSum:F2}");
+            Console.WriteLine($"Частное: {quotient:F2}");
+        }
+    }
+}
