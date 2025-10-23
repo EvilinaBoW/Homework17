@@ -1,0 +1,738 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+        static void Main()
+        {
+            Random random = new Random();
+            while (true)
+            {
+                Console.WriteLine("\nВыберите задачу (1-30) или 0 для выхода:");
+                if (!int.TryParse(Console.ReadLine(), out int task) || task < 0 || task > 30) { Console.WriteLine("Неверный номер задачи!"); continue; }
+                if (task == 0) break;
+
+                switch (task)
+                {
+                    case 1: Task1(random); break;
+                    case 2: Task2(random); break;
+                    case 3: Task3(); break;
+                    case 4: Task4(random); break;
+                    case 5: Task5(); break;
+                    case 6: Task6(random); break;
+                    case 7: Task7(); break;
+                    case 8: Task8(); break;
+                    case 9: Task9(random); break;
+                    case 10: Task10(random); break;
+                    case 11: Task11(random); break;
+                    case 12: Task12(random); break;
+                    case 13: Task13(random); break;
+                    case 14: Task14(random); break;
+                    case 15: Task15(random); break;
+                    case 16: Task16(random); break;
+                    case 17: Task17(random); break;
+                    case 18: Task18(random); break;
+                    case 19: Task19(random); break;
+                    case 20: Task20(random); break;
+                    case 21: Task21(random); break;
+                    case 22: Task22(random); break;
+                    case 23: Task23(random); break;
+                    case 24: Task24(random); break;
+                    case 25: Task25(random); break;
+                    case 26: Task26(random); break;
+                    case 27: Task27(); break;
+                    case 28: Task28(random); break;
+                    case 29: Task29(random); break;
+                    case 30: Task30(random); break;
+                    default: Console.WriteLine("Неверный номер задачи!"); break;
+                }
+            }
+        }
+
+        // Задача 1: Сортировка по возрастанию элементов последней строки (3×4)
+        static void Task1(Random random)
+        {
+            Console.WriteLine("\nЗадача 1: Сортировка по возрастанию элементов последней строки (3×4)");
+            int[,] matrix = new int[3, 4];
+            GenerateMatrix(random, matrix, 1, 20);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int[] lastRow = new int[4];
+            for (int j = 0; j < 4; j++) lastRow[j] = matrix[2, j];
+            Array.Sort(lastRow);
+            for (int j = 0; j < 4; j++) matrix[2, j] = lastRow[j];
+
+            Console.WriteLine("\nМатрица после сортировки последней строки:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 2: Сумма модулей отрицательных нечетных элементов (7×7)
+        static void Task2(Random random)
+        {
+            Console.WriteLine("\nЗадача 2: Сумма модулей отрицательных нечетных элементов (7×7)");
+            int[,] matrix = new int[7, 7];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int sum = 0;
+            for (int i = 0; i < 7; i++)
+                for (int j = 0; j < 7; j++)
+                    if (matrix[i, j] < 0 && Math.Abs(matrix[i, j]) % 2 != 0)
+                        sum += Math.Abs(matrix[i, j]);
+            Console.WriteLine($"Сумма модулей отрицательных нечетных элементов: {sum}");
+        }
+
+        // Задача 3: Заполнение матрицы 4×4 в заданном порядке
+        static void Task3()
+        {
+            Console.WriteLine("\nЗадача 3: Заполнение матрицы 4×4 в заданном порядке");
+            int[,] matrix = new int[4, 4];
+            int value = 1;
+            for (int j = 0; j < 4; j++) matrix[0, j] = value++;
+            for (int i = 1; i < 4; i++) matrix[i, 3] = value++;
+            for (int j = 2; j >= 0; j--) matrix[3, j] = value++;
+            for (int i = 2; i > 0; i--) matrix[i, 0] = value++;
+            for (int j = 1; j < 3; j++) matrix[1, j] = value++;
+            for (int j = 2; j > 0; j--) matrix[2, j] = value++;
+
+            Console.WriteLine("\nПолученная матрица:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 4: Удаление строк без повторяющихся элементов (n×m)
+        static void Task4(Random random)
+        {
+            Console.WriteLine("\nЗадача 4: Удаление строк без повторяющихся элементов (n×m)");
+            Console.Write("Введите количество строк n: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов m: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, m];
+            GenerateMatrix(random, matrix, 1, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            var rowsToKeep = new List<int>();
+            for (int i = 0; i < n; i++)
+            {
+                var elements = new HashSet<int>();
+                bool hasDuplicates = false;
+                for (int j = 0; j < m; j++)
+                {
+                    if (!elements.Add(matrix[i, j])) { hasDuplicates = true; break; }
+                }
+                if (hasDuplicates) rowsToKeep.Add(i);
+            }
+
+            int newRows = rowsToKeep.Count;
+            int[,] newMatrix = new int[newRows, m];
+            for (int i = 0; i < newRows; i++)
+                for (int j = 0; j < m; j++)
+                    newMatrix[i, j] = matrix[rowsToKeep[i], j];
+
+            Console.WriteLine("\nМатрица после удаления строк:");
+            PrintMatrix(newMatrix);
+        }
+
+        // Задача 5: Заполнение 3×3 по спирали от центра по возрастанию
+        static void Task5()
+        {
+            Console.WriteLine("\nЗадача 5: Заполнение матрицы 3×3 по спирали от центра");
+            int[,] matrix = new int[3, 3];
+            int value = 1, center = 1;
+            matrix[center, center] = value++;
+            matrix[center, center + 1] = value++;
+            matrix[center + 1, center + 1] = value++;
+            matrix[center + 1, center] = value++;
+            matrix[center + 1, center - 1] = value++;
+            matrix[center, center - 1] = value++;
+            matrix[center - 1, center - 1] = value++;
+            matrix[center - 1, center] = value++;
+            matrix[center - 1, center + 1] = value++;
+
+            Console.WriteLine("\nПолученная матрица:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 6: Удаление ряда с минимальным элементом главной диагонали (n×m)
+        static void Task6(Random random)
+        {
+            Console.WriteLine("\nЗадача 6: Удаление ряда с минимальным элементом главной диагонали (n×m)");
+            Console.Write("Введите количество строк n: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов m: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrixA = new int[n, m];
+            GenerateMatrix(random, matrixA, -10, 10);
+            Console.WriteLine("\nИсходная матрица A:");
+            PrintMatrix(matrixA);
+
+            int minDiagonal = int.MaxValue, minIndex = 0;
+            for (int i = 0; i < Math.Min(n, m); i++)
+                if (matrixA[i, i] < minDiagonal) { minDiagonal = matrixA[i, i]; minIndex = i; }
+
+            int[,] matrixB = new int[n - 1, m];
+            for (int i = 0, newI = 0; i < n; i++)
+                if (i != minIndex)
+                {
+                    for (int j = 0; j < m; j++)
+                        matrixB[newI, j] = matrixA[i, j];
+                    newI++;
+                }
+
+            Console.WriteLine("\nМатрица B после удаления ряда:");
+            PrintMatrix(matrixB);
+        }
+
+        // Задача 7: Заполнение по спирали против часовой стрелки (n×n)
+        static void Task7()
+        {
+            Console.WriteLine("\nЗадача 7: Заполнение по спирали против часовой стрелки (n×n)");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            int value = 1, layers = n / 2;
+            for (int layer = 0; layer < layers; layer++)
+            {
+                int row = layer, col = layer;
+                for (; col < n - layer - 1; col++) matrix[row, col] = value++;
+                for (; row < n - layer - 1; row++) matrix[row, col] = value++;
+                for (; col > layer; col--) matrix[row, col] = value++;
+                for (; row > layer; row--) matrix[row, col] = value++;
+            }
+            if (n % 2 == 1) matrix[n / 2, n / 2] = value;
+
+            Console.WriteLine("\nПолученная матрица:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 8: Заполнение по спирали по часовой стрелке (n×n)
+        static void Task8()
+        {
+            Console.WriteLine("\nЗадача 8: Заполнение по спирали по часовой стрелке (n×n)");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            int value = 1, layers = n / 2;
+            for (int layer = 0; layer < layers; layer++)
+            {
+                int row = layer, col = layer;
+                for (; col < n - layer - 1; col++) matrix[row, col] = value++;
+                for (; row < n - layer - 1; row++) matrix[row, col] = value++;
+                for (; col > layer; col--) matrix[row, col] = value++;
+                for (; row > layer; row--) matrix[row, col] = value++;
+            }
+            if (n % 2 == 1) matrix[n / 2, n / 2] = value;
+
+            Console.WriteLine("\nПолученная матрица:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 9: Номера строк массива A(M,N) в массив B
+        static void Task9(Random random)
+        {
+            Console.WriteLine("\nЗадача 9: Номера строк массива A(M,N) в массив B");
+            Console.Write("Введите количество строк M: ");
+            int m = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов N: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrixA = new int[m, n];
+            GenerateMatrix(random, matrixA, -10, 10);
+            Console.WriteLine("\nИсходная матрица A:");
+            PrintMatrix(matrixA);
+
+            int[] arrayB = new int[m];
+            for (int i = 0; i < m; i++) arrayB[i] = i;
+            Console.WriteLine("\nМассив B (номера строк): [" + string.Join(", ", arrayB) + "]");
+        }
+
+        // Задача 10: Элементы, превышающие B по модулю, в массив C
+        static void Task10(Random random)
+        {
+            Console.WriteLine("\nЗадача 10: Элементы, превышающие B по модулю, в массив C");
+            Console.Write("Введите количество строк N: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов M: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrixA = new int[n, m];
+            GenerateMatrix(random, matrixA, -20, 20);
+            Console.WriteLine("\nИсходная матрица A:");
+            PrintMatrix(matrixA);
+            Console.Write("Введите число B: ");
+            int b = int.Parse(Console.ReadLine());
+
+            var exceeding = new List<int>();
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
+                    if (Math.Abs(matrixA[i, j]) > b) exceeding.Add(matrixA[i, j]);
+            int[] arrayC = exceeding.ToArray();
+            Console.WriteLine($"Количество элементов, превышающих {b} по модулю: {arrayC.Length}");
+            Console.WriteLine("Массив C: [" + string.Join(", ", arrayC) + "]");
+        }
+
+        // Задача 11: Элементы, равные введенному числу
+        static void Task11(Random random)
+        {
+            Console.WriteLine("\nЗадача 11: Элементы, равные введенному числу");
+            Console.Write("Введите количество строк N: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов M: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrixA = new int[n, m];
+            GenerateMatrix(random, matrixA, -10, 10);
+            Console.WriteLine("\nИсходная матрица A:");
+            PrintMatrix(matrixA);
+            Console.Write("Введите число для поиска: ");
+            int target = int.Parse(Console.ReadLine());
+
+            int count = 0;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
+                    if (matrixA[i, j] == target) count++;
+            Console.WriteLine($"Количество элементов, равных {target}: {count}");
+        }
+
+        // Задача 12: Деление всех элементов на максимум по модулю (5×10)
+        static void Task12(Random random)
+        {
+            Console.WriteLine("\nЗадача 12: Деление всех элементов на максимум по модулю (5×10)");
+            int[,] matrixA = new int[5, 10];
+            GenerateMatrix(random, matrixA, -20, 20);
+            Console.WriteLine("\nИсходная матрица A:");
+            PrintMatrix(matrixA);
+
+            int maxAbs = 0;
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 10; j++)
+                    maxAbs = Math.Max(maxAbs, Math.Abs(matrixA[i, j]));
+
+            int[,] newMatrix = new int[5, 10];
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 10; j++)
+                    newMatrix[i, j] = matrixA[i, j] / maxAbs;
+
+            Console.WriteLine("\nНовая матрица после деления:");
+            PrintMatrix(newMatrix);
+        }
+
+        // Задача 13: Вставка первой строки после минимального элемента
+        static void Task13(Random random)
+        {
+            Console.WriteLine("\nЗадача 13: Вставка первой строки после минимального элемента");
+            Console.Write("Введите количество строк N: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов M: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, m];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int min = int.MaxValue, minI = 0;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
+                    if (matrix[i, j] < min) { min = matrix[i, j]; minI = i; }
+
+            int newRows = n + 1;
+            int[,] newMatrix = new int[newRows, m];
+            for (int i = 0, newI = 0; i < n; i++, newI++)
+            {
+                if (i == minI + 1)
+                {
+                    for (int j = 0; j < m; j++) newMatrix[newI, j] = matrix[0, j];
+                    newI++;
+                }
+                for (int j = 0; j < m; j++) newMatrix[newI, j] = matrix[i, j];
+            }
+
+            Console.WriteLine("\nМатрица после вставки:");
+            PrintMatrix(newMatrix);
+        }
+
+        // Задача 14: Произведение элементов ниже левой диагонали (5×5)
+        static void Task14(Random random)
+        {
+            Console.WriteLine("\nЗадача 14: Произведение элементов ниже левой диагонали (5×5)");
+            int[,] matrix = new int[5, 5];
+            GenerateMatrix(random, matrix, -5, 5);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            long product = 1;
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < i; j++)
+                    product *= matrix[i, j];
+            Console.WriteLine($"Произведение элементов ниже левой диагонали: {product}");
+        }
+
+        // Задача 15: Сумма элементов выше левой диагонали (5×5)
+        static void Task15(Random random)
+        {
+            Console.WriteLine("\nЗадача 15: Сумма элементов выше левой диагонали (5×5)");
+            int[,] matrix = new int[5, 5];
+            GenerateMatrix(random, matrix, -5, 5);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int sum = 0;
+            for (int i = 0; i < 5; i++)
+                for (int j = i + 1; j < 5; j++)
+                    sum += matrix[i, j];
+            Console.WriteLine($"Сумма элементов выше левой диагонали: {sum}");
+        }
+
+        // Задача 16: Замена отрицательных в первой строке на 0 (5×5)
+        static void Task16(Random random)
+        {
+            Console.WriteLine("\nЗадача 16: Замена отрицательных в первой строке на 0 (5×5)");
+            int[,] matrix = new int[5, 5];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            for (int j = 0; j < 5; j++)
+                if (matrix[0, j] < 0) matrix[0, j] = 0;
+
+            Console.WriteLine("\nМатрица после замены:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 17: Деление на максимум по модулю (5×5)
+        static void Task17(Random random)
+        {
+            Console.WriteLine("\nЗадача 17: Деление на максимум по модулю (5×5)");
+            int[,] matrix = new int[5, 5];
+            GenerateMatrix(random, matrix, -20, 20);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int maxAbs = 0;
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 5; j++)
+                    maxAbs = Math.Max(maxAbs, Math.Abs(matrix[i, j]));
+
+            int[,] newMatrix = new int[5, 5];
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 5; j++)
+                    newMatrix[i, j] = matrix[i, j] / maxAbs;
+
+            Console.WriteLine("\nНовая матрица после деления:");
+            PrintMatrix(newMatrix);
+        }
+
+        // Задача 18: Сортировка четных/нечетных столбцов (M×N)
+        static void Task18(Random random)
+        {
+            Console.WriteLine("\nЗадача 18: Сортировка четных/нечетных столбцов (M×N)");
+            Console.Write("Введите количество строк M: ");
+            int m = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов N: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[m, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            for (int j = 0; j < n; j++)
+            {
+                int[] column = new int[m];
+                for (int i = 0; i < m; i++) column[i] = matrix[i, j];
+                Array.Sort(column);
+                if (j % 2 == 0) Array.Reverse(column); 
+                for (int i = 0; i < m; i++) matrix[i, j] = column[i];
+            }
+
+            Console.WriteLine("\nМатрица после сортировки:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 19: Сумма второго столбца и третьей строки (8×5)
+        static void Task19(Random random)
+        {
+            Console.WriteLine("\nЗадача 19: Сумма второго столбца и третьей строки (8×5)");
+            int[,] matrix = new int[8, 5];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int sumCol2 = 0, sumRow3 = 0;
+            for (int i = 0; i < 8; i++) sumCol2 += matrix[i, 1];
+            for (int j = 0; j < 5; j++) sumRow3 += matrix[2, j];
+            Console.WriteLine($"Сумма второго столбца: {sumCol2}");
+            Console.WriteLine($"Сумма третьей строки: {sumRow3}");
+        }
+
+        // Задача 20: Среднее арифметическое элементов [1,20] (M×N)
+        static void Task20(Random random)
+        {
+            Console.WriteLine("\nЗадача 20: Среднее арифметическое элементов [1,20] (M×N)");
+            Console.Write("Введите количество строк M: ");
+            int m = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов N: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[m, n];
+            GenerateMatrix(random, matrix, -20, 20);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            var rangeElements = new List<int>();
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    if (matrix[i, j] >= 1 && matrix[i, j] <= 20) rangeElements.Add(matrix[i, j]);
+            double avg = rangeElements.Any() ? rangeElements.Average() : 0;
+            Console.WriteLine($"Одномерный массив [1,20]: [" + string.Join(", ", rangeElements) + "]");
+            Console.WriteLine($"Среднее арифметическое: {avg:F2}");
+        }
+
+        // Задача 21: Произведение элементов [1,10] (M×N)
+        static void Task21(Random random)
+        {
+            Console.WriteLine("\nЗадача 21: Произведение элементов [1,10] (M×N)");
+            Console.Write("Введите количество строк M: ");
+            int m = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов N: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[m, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            var rangeElements = new List<int>();
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    if (matrix[i, j] >= 1 && matrix[i, j] <= 10) rangeElements.Add(matrix[i, j]);
+            long product = rangeElements.Any() ? rangeElements.Aggregate(1L, (a, b) => a * b) : 0;
+            Console.WriteLine($"Одномерный массив [1,10]: [" + string.Join(", ", rangeElements) + "]");
+            Console.WriteLine($"Произведение: {product}");
+        }
+
+        // Задача 22: Поменять максимум строки с главной диагональю
+        static void Task22(Random random)
+        {
+            Console.WriteLine("\nЗадача 22: Поменять максимум строки с главной диагональю");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            for (int i = 0; i < n; i++)
+            {
+                int max = int.MinValue, maxJ = 0;
+                for (int j = 0; j < n; j++)
+                    if (matrix[i, j] > max) { max = matrix[i, j]; maxJ = j; }
+                int temp = matrix[i, i];
+                matrix[i, i] = max;
+                matrix[i, maxJ] = temp;
+            }
+
+            Console.WriteLine("\nМатрица после замены:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 23: Столбец с минимальным количеством элементов, кратных сумме индексов
+        static void Task23(Random random)
+        {
+            Console.WriteLine("\nЗадача 23: Столбец с минимальным количеством элементов, кратных сумме индексов");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int minCount = int.MaxValue, minCol = 0;
+            for (int j = 0; j < n; j++)
+            {
+                int count = 0;
+                for (int i = 0; i < n; i++)
+                    if (matrix[i, j] % (i + j) == 0) count++;
+                if (count < minCount) { minCount = count; minCol = j; }
+            }
+            Console.WriteLine($"Столбец с минимальным количеством: {minCol + 1} (количество = {minCount})");
+        }
+
+        // Задача 24: Сумма элементов выше главной диагонали
+        static void Task24(Random random)
+        {
+            Console.WriteLine("\nЗадача 24: Сумма элементов выше главной диагонали");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+                for (int j = i + 1; j < n; j++)
+                    sum += matrix[i, j];
+            Console.WriteLine($"Сумма элементов выше главной диагонали: {sum}");
+        }
+
+        // Задача 25: Проверка симметрии относительно главной диагонали
+        static void Task25(Random random)
+        {
+            Console.WriteLine("\nЗадача 25: Проверка симметрии относительно главной диагонали");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            bool isSymmetric = true;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    if (matrix[i, j] != matrix[j, i]) { isSymmetric = false; break; }
+            Console.WriteLine($"Матрица {(isSymmetric ? "является" : "не является")} симметричной");
+        }
+
+        // Задача 26: Проверка несимметрии относительно главной диагонали
+        static void Task26(Random random)
+        {
+            Console.WriteLine("\nЗадача 26: Проверка несимметрии относительно главной диагонали");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            GenerateMatrix(random, matrix, -10, 10);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            bool isNotSymmetric = false;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    if (matrix[i, j] != matrix[j, i]) { isNotSymmetric = true; break; }
+            Console.WriteLine($"Матрица {(isNotSymmetric ? "не является" : "является")} симметричной");
+        }
+
+        // Задача 27: Таблица умножения одним циклом (n×m)
+        static void Task27()
+        {
+            Console.WriteLine("\nЗадача 27: Таблица умножения одним циклом (n×m)");
+            Console.Write("Введите количество строк n: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов m: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, m];
+            for (int i = 0; i < n * m; i++)
+                matrix[i / m, i % m] = (i / m) * (i % m);
+
+            Console.WriteLine("\nПолученная матрица:");
+            PrintMatrix(matrix);
+        }
+
+        // Задача 28: Номер строки с минимальным числом одинаковых элементов
+        static void Task28(Random random)
+        {
+            Console.WriteLine("\nЗадача 28: Номер строки с минимальным числом одинаковых элементов");
+            Console.Write("Введите количество строк N: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов M: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, m];
+            GenerateMatrix(random, matrix, 1, 5);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int minDuplicates = int.MaxValue, minRow = 0;
+            for (int i = 0; i < n; i++)
+            {
+                var counts = new int[6];
+                for (int j = 0; j < m; j++) counts[matrix[i, j]]++;
+                int duplicates = counts.Max() - 1; 
+                if (duplicates < minDuplicates) { minDuplicates = duplicates; minRow = i; }
+            }
+            Console.WriteLine($"Строка с минимальным числом одинаковых элементов: {minRow + 1} (количество = {minDuplicates})");
+        }
+
+        // Задача 29: Произведение элементов ниже главной диагонали
+        static void Task29(Random random)
+        {
+            Console.WriteLine("\nЗадача 29: Произведение элементов ниже главной диагонали");
+            Console.Write("Введите размер n: ");
+            int n = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            GenerateMatrix(random, matrix, -5, 5);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            long product = 1;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < i; j++)
+                    product *= matrix[i, j];
+            Console.WriteLine($"Произведение элементов ниже главной диагонали: {product}");
+        }
+
+        // Задача 30: Номер строки с максимальным числом одинаковых элементов
+        static void Task30(Random random)
+        {
+            Console.WriteLine("\nЗадача 30: Номер строки с максимальным числом одинаковых элементов");
+            Console.Write("Введите количество строк N: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("Введите количество столбцов M: ");
+            int m = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, m];
+            GenerateMatrix(random, matrix, 1, 5);
+            Console.WriteLine("\nИсходная матрица:");
+            PrintMatrix(matrix);
+
+            int maxDuplicates = 0, maxRow = 0;
+            for (int i = 0; i < n; i++)
+            {
+                var counts = new int[6];
+                for (int j = 0; j < m; j++) counts[matrix[i, j]]++;
+                int duplicates = counts.Max() - 1; // Исключаем единичное вхождение
+                if (duplicates > maxDuplicates) { maxDuplicates = duplicates; maxRow = i; }
+            }
+            Console.WriteLine($"Строка с максимальным числом одинаковых элементов: {maxRow + 1} (количество = {maxDuplicates})");
+        }
+
+        static void GenerateMatrix<T>(Random random, T[,] matrix, T min, T max) where T : IComparable<T>
+        {
+            dynamic minVal = Convert.ChangeType(min, typeof(T));
+            dynamic maxVal = Convert.ChangeType(max, typeof(T));
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    matrix[i, j] = (dynamic)random.Next((int)minVal, (int)maxVal + 1);
+        }
+
+        static void SortMatrixByLastColumn(int[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            int lastCol = cols - 1;
+            for (int i = 0; i < rows - 1; i++)
+                for (int j = 0; j < rows - 1 - i; j++)
+                    if (matrix[j, lastCol] < matrix[j + 1, lastCol])
+                        for (int col = 0; col < cols; col++)
+                        {
+                            int temp = matrix[j, col];
+                            matrix[j, col] = matrix[j + 1, col];
+                            matrix[j + 1, col] = temp;
+                        }
+        }
+
+        static void PrintMatrix<T>(T[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                    Console.Write($"{matrix[i, j],4}");
+                Console.WriteLine();
+            }
+        }
+    }
+}
