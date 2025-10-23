@@ -1,0 +1,772 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+            static void Main()
+            {
+                while (true)
+                {
+                    Console.WriteLine("\nВыберите задачу (3-30) или 0 для выхода:");
+                    int task = int.Parse(Console.ReadLine());
+                    if (task == 0) break;
+
+                    switch (task)
+                    {
+                        case 3: Task3(); break;
+                        case 4: Task4(); break;
+                        case 5: Task5(); break;
+                        case 6: Task6(); break;
+                        case 7: Task7(); break;
+                        case 8: Task8(); break;
+                        case 9: Task9(); break;
+                        case 10: Task10(); break;
+                        case 11: Task11(); break;
+                        case 12: Task12(); break;
+                        case 13: Task13(); break;
+                        case 14: Task14(); break;
+                        case 15: Task15(); break;
+                        case 16: Task16(); break;
+                        case 17: Task17(); break;
+                        case 18: Task18(); break;
+                        case 19: Task19(); break;
+                        case 20: Task20(); break;
+                        case 21: Task21(); break;
+                        case 22: Task22(); break;
+                        case 23: Task23(); break;
+                        case 24: Task24(); break;
+                        case 25: Task25(); break;
+                        case 26: Task26(); break;
+                        case 27: Task27(); break;
+                        case 28: Task28(); break;
+                        case 29: Task29(); break;
+                        case 30: Task30(); break;
+                        default: Console.WriteLine("Неверный номер задачи!"); break;
+                    }
+                }
+            }
+
+            // Задача 3: Перевод целого двоичного числа в шестнадцатеричную
+            static void Task3()
+            {
+                Console.WriteLine("\nЗадача 3: Перевод целого двоичного числа в шестнадцатеричную");
+                Console.Write("Введите целое двоичное число (только 0 и 1): ");
+                string binary = Console.ReadLine();
+                if (binary.Any(c => c != '0' && c != '1'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                    return;
+                }
+
+                long decimalNum = Convert.ToInt64(binary, 2);
+                string hex = Convert.ToString(decimalNum, 16).ToUpper();
+                Console.WriteLine($"Двоичное: {binary}");
+                Console.WriteLine($"Шестнадцатеричное: {hex}");
+            }
+
+            // Задача 4: Перевод дробного двоичного числа в десятичную
+            static void Task4()
+            {
+                Console.WriteLine("\nЗадача 4: Перевод дробного двоичного числа в десятичную");
+                Console.Write("Введите дробное двоичное число (только 0 и 1, разделенные точкой): ");
+                string binary = Console.ReadLine();
+                if (binary.Any(c => c != '0' && c != '1' && c != '.'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0, 1 и точку!");
+                    return;
+                }
+
+                string[] parts = binary.Split('.');
+                if (parts.Length != 2)
+                {
+                    Console.WriteLine("Ошибка: Должна быть одна точка!");
+                    return;
+                }
+
+                double decimalNum = Convert.ToInt32(parts[0], 2) + ConvertBinaryFraction(parts[1]);
+                Console.WriteLine($"Двоичное: {binary}");
+                Console.WriteLine($"Десятичное: {decimalNum:F6}");
+            }
+
+            // Задача 5: Перевод дробного двоичного числа в восьмеричную
+            static void Task5()
+            {
+                Console.WriteLine("\nЗадача 5: Перевод дробного двоичного числа в восьмеричную");
+                Console.Write("Введите дробное двоичное число (только 0 и 1, разделенные точкой): ");
+                string binary = Console.ReadLine();
+                if (binary.Any(c => c != '0' && c != '1' && c != '.'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0, 1 и точку!");
+                    return;
+                }
+
+                string[] parts = binary.Split('.');
+                if (parts.Length != 2)
+                {
+                    Console.WriteLine("Ошибка: Должна быть одна точка!");
+                    return;
+                }
+
+                long integerPart = Convert.ToInt64(parts[0], 2);
+                double fractionalPart = ConvertBinaryFraction(parts[1]);
+                string octalInteger = Convert.ToString(integerPart, 8);
+                string octalFraction = ConvertFractionToBase(fractionalPart, 8, 6);
+                Console.WriteLine($"Двоичное: {binary}");
+                Console.WriteLine($"Восьмеричное: {octalInteger}{(octalFraction.Length > 0 ? "." + octalFraction : "")}");
+            }
+
+            // Задача 6: Перевод дробного двоичного числа в шестнадцатеричную
+            static void Task6()
+            {
+                Console.WriteLine("\nЗадача 6: Перевод дробного двоичного числа в шестнадцатеричную");
+                Console.Write("Введите дробное двоичное число (только 0 и 1, разделенные точкой): ");
+                string binary = Console.ReadLine();
+                if (binary.Any(c => c != '0' && c != '1' && c != '.'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0, 1 и точку!");
+                    return;
+                }
+
+                string[] parts = binary.Split('.');
+                if (parts.Length != 2)
+                {
+                    Console.WriteLine("Ошибка: Должна быть одна точка!");
+                    return;
+                }
+
+                long integerPart = Convert.ToInt64(parts[0], 2);
+                double fractionalPart = ConvertBinaryFraction(parts[1]);
+                string hexInteger = Convert.ToString(integerPart, 16).ToUpper();
+                string hexFraction = ConvertFractionToBase(fractionalPart, 16, 6);
+                Console.WriteLine($"Двоичное: {binary}");
+                Console.WriteLine($"Шестнадцатеричное: {hexInteger}{(hexFraction.Length > 0 ? "." + hexFraction : "")}");
+            }
+
+            // Задача 7: Изменение разрядности двузначных чисел в массиве
+            static void Task7()
+            {
+                Console.WriteLine("\nЗадача 7: Изменение разрядности двузначных чисел");
+                int[] array = new int[15];
+                Console.WriteLine("Введите 15 двузначных целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                int[] result = array.Select(x => (Math.Abs(x) % 10) * 10 + (Math.Abs(x) / 10)).ToArray();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Новый массив: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 8: Перевод массива из восьмеричной в десятичную
+            static void Task8()
+            {
+                Console.WriteLine("\nЗадача 8: Перевод массива из восьмеричной в десятичную");
+                int[] array = new int[9];
+                Console.WriteLine("Введите 9 двузначных чисел в восьмеричной системе:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine(), System.Globalization.NumberStyles.HexNumber);
+                }
+
+                int[] result = array.Select(x => Convert.ToInt32(x.ToString("X"), 8)).ToArray();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Новый массив: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 9: Массив из старших разрядов двузначных чисел
+            static void Task9()
+            {
+                Console.WriteLine("\nЗадача 9: Массив из старших разрядов двузначных чисел");
+                int[] array = new int[7];
+                Console.WriteLine("Введите 7 двузначных целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                int[] result = array.Select(x => Math.Abs(x) / 10).ToArray();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив старших разрядов: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 10: Объединение двух массивов и сортировка по убыванию
+            static void Task10()
+            {
+                Console.WriteLine("\nЗадача 10: Объединение и сортировка двух массивов по убыванию");
+                double[] array1 = new double[7];
+                double[] array2 = new double[9];
+                Console.WriteLine("Введите 7 вещественных чисел для первого массива:");
+                for (int i = 0; i < array1.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array1[i] = double.Parse(Console.ReadLine());
+                }
+                Console.WriteLine("Введите 9 вещественных чисел для второго массива:");
+                for (int i = 0; i < array2.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array2[i] = double.Parse(Console.ReadLine());
+                }
+
+                double[] result = array1.Concat(array2).OrderByDescending(x => x).ToArray();
+                Console.WriteLine("\nПервый массив: [" + string.Join(", ", array1) + "]");
+                Console.WriteLine("Второй массив: [" + string.Join(", ", array2) + "]");
+                Console.WriteLine("Объединенный отсортированный массив: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 11: Удаление элементов, встречающихся более двух раз
+            static void Task11()
+            {
+                Console.WriteLine("\nЗадача 11: Удаление элементов, встречающихся более двух раз");
+                string[] array = new string[12];
+                Console.WriteLine("Введите 12 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                var counts = array.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+                var result = array.Where(x => counts[x] <= 2).ToArray();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив после удаления: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 12: Определение местоположения двух одинаковых элементов
+            static void Task12()
+            {
+                Console.WriteLine("\nЗадача 12: Местоположение двух одинаковых элементов");
+                int[] array = new int[10];
+                Console.WriteLine("Введите 10 целых чисел (два одинаковых элемента):");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                var groups = array.GroupBy(x => x).Where(g => g.Count() == 2).ToList();
+                if (groups.Count != 1 || groups[0].Count() != 2)
+                {
+                    Console.WriteLine("\nОшибка: В массиве должно быть ровно два одинаковых элемента!");
+                    return;
+                }
+
+                int value = groups[0].Key;
+                var indices = array.Select((x, i) => new { Value = x, Index = i })
+                                  .Where(x => x.Value == value)
+                                  .Select(x => x.Index)
+                                  .ToArray();
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine($"Одинаковые элементы {value} находятся на индексах: {string.Join(", ", indices)}");
+            }
+
+            // Задача 13: Циклический сдвиг влево на две позиции
+            static void Task13()
+            {
+                Console.WriteLine("\nЗадача 13: Циклический сдвиг влево на две позиции");
+                Console.Write("Введите целое двоичное число (только 0 и 1): ");
+                string binary = Console.ReadLine();
+                if (binary.Any(c => c != '0' && c != '1'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                    return;
+                }
+
+                long original = Convert.ToInt64(binary, 2);
+                int len = binary.Length;
+                string shifted = binary.Substring(2) + binary.Substring(0, 2);
+                long shiftedNum = Convert.ToInt64(shifted, 2);
+                long difference = original - shiftedNum;
+                Console.WriteLine($"Исходное число: {binary} (десятичное: {original})");
+                Console.WriteLine($"Сдвинутое число: {shifted} (десятичное: {shiftedNum})");
+                Console.WriteLine($"Разность: {difference}");
+            }
+
+            // Задача 14: Упорядочивание по убыванию и сумма
+            static void Task14()
+            {
+                Console.WriteLine("\nЗадача 14: Упорядочивание по убыванию и сумма");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                var sorted = array.Select(x => Convert.ToInt64(x, 2)).OrderByDescending(x => x).ToArray();
+                long sum = sorted.Sum();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Отсортированный массив: [" + string.Join(", ", sorted.Select(x => x.ToString())) + "]");
+                Console.WriteLine($"Сумма: {sum}");
+            }
+
+            // Задача 15: Упорядочивание по возрастанию и среднее
+            static void Task15()
+            {
+                Console.WriteLine("\nЗадача 15: Упорядочивание по возрастанию и среднее");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                var sorted = array.Select(x => Convert.ToInt64(x, 2)).OrderBy(x => x).ToArray();
+                double average = sorted.Average();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Отсортированный массив: [" + string.Join(", ", sorted.Select(x => x.ToString())) + "]");
+                Console.WriteLine($"Среднее значение: {average:F2}");
+            }
+
+            // Задача 16: Поменять местами максимальный и минимальный элементы
+            static void Task16()
+            {
+                Console.WriteLine("\nЗадача 16: Поменять местами максимальный и минимальный элементы");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                var values = array.Select(x => Convert.ToInt64(x, 2)).ToArray();
+                int maxIndex = Array.IndexOf(values, values.Max());
+                int minIndex = Array.IndexOf(values, values.Min());
+                string temp = array[maxIndex];
+                array[maxIndex] = array[minIndex];
+                array[minIndex] = temp;
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив после обмена: [" + string.Join(", ", array) + "]");
+            }
+
+            // Задача 17: Циклический сдвиг вправо на одну позицию
+            static void Task17()
+            {
+                Console.WriteLine("\nЗадача 17: Циклический сдвиг вправо на одну позицию");
+                Console.Write("Введите целое двоичное число (только 0 и 1): ");
+                string binary = Console.ReadLine();
+                if (binary.Any(c => c != '0' && c != '1'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                    return;
+                }
+
+                long original = Convert.ToInt64(binary, 2);
+                string shifted = binary[binary.Length - 1] + binary.Substring(0, binary.Length - 1);
+                long shiftedNum = Convert.ToInt64(shifted, 2);
+                long sum = original + shiftedNum;
+                Console.WriteLine($"Исходное число: {binary} (десятичное: {original})");
+                Console.WriteLine($"Сдвинутое число: {shifted} (десятичное: {shiftedNum})");
+                Console.WriteLine($"Сумма: {sum}");
+            }
+
+            // Задача 18: Разность сумм монотонных участков
+            static void Task18()
+            {
+                Console.WriteLine("\nЗадача 18: Разность сумм монотонных участков");
+                int[] array = new int[10];
+                Console.WriteLine("Введите 10 целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                int ascendingSum = 0, descendingSum = 0;
+                int i = 0;
+                while (i < array.Length)
+                {
+                    if (i < array.Length - 1 && array[i] < array[i + 1])
+                    {
+                        int start = i;
+                        while (i < array.Length - 1 && array[i] < array[i + 1])
+                            i++;
+                        ascendingSum += array.Skip(start).Take(i - start + 1).Sum();
+                    }
+                    else if (i < array.Length - 1 && array[i] > array[i + 1])
+                    {
+                        int start = i;
+                        while (i < array.Length - 1 && array[i] > array[i + 1])
+                            i++;
+                        descendingSum += array.Skip(start).Take(i - start + 1).Sum();
+                    }
+                    else
+                        i++;
+                }
+                long difference = (long)ascendingSum - descendingSum;
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine($"Сумма возрастающих: {ascendingSum}, Сумма убывающих: {descendingSum}");
+                Console.WriteLine($"Разность: {difference}");
+            }
+
+            // Задача 19: Проверка арифметической прогрессии
+            static void Task19()
+            {
+                Console.WriteLine("\nЗадача 19: Проверка арифметической прогрессии");
+                int[] array = new int[10];
+                Console.WriteLine("Введите 10 целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                int diff = array[1] - array[0];
+                bool isArithmetic = true;
+                for (int i = 2; i < array.Length; i++)
+                {
+                    if (array[i] - array[i - 1] != diff)
+                    {
+                        isArithmetic = false;
+                        break;
+                    }
+                }
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine(isArithmetic ? $"Образуют арифметическую прогрессию с разностью {diff}" : "Не образуют");
+            }
+
+            // Задача 20: Проверка геометрической прогрессии
+            static void Task20()
+            {
+                Console.WriteLine("\nЗадача 20: Проверка геометрической прогрессии");
+                int[] array = new int[10];
+                Console.WriteLine("Введите 10 целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                double ratio = (double)array[1] / array[0];
+                bool isGeometric = true;
+                for (int i = 2; i < array.Length; i++)
+                {
+                    if (Math.Abs((double)array[i] / array[i - 1] - ratio) > 0.0001)
+                    {
+                        isGeometric = false;
+                        break;
+                    }
+                }
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine(isGeometric ? $"Образуют геометрическую прогрессию с знаменателем {ratio:F2}" : "Не образуют");
+            }
+
+            // Задача 21: Индексы элементов, больших правых соседей
+            static void Task21()
+            {
+                Console.WriteLine("\nЗадача 21: Индексы элементов, больших правых соседей");
+                int[] array = new int[10];
+                Console.WriteLine("Введите 10 целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                var indices = new List<int>();
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    if (array[i] > array.Skip(i + 1).Min())
+                        indices.Add(i);
+                }
+                int count = indices.Count;
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine($"Индексы: {string.Join(", ", indices)}");
+                Console.WriteLine($"Количество: {count}");
+            }
+
+            // Задача 22: Номер последнего элемента с A[i-1] < A[i] < A[i+1]
+            static void Task22()
+            {
+                Console.WriteLine("\nЗадача 22: Номер последнего элемента с A[i-1] < A[i] < A[i+1]");
+                int[] array = new int[10];
+                Console.WriteLine("Введите 10 целых чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                int lastIndex = -1;
+                for (int i = 1; i < array.Length - 1; i++)
+                {
+                    if (array[i - 1] < array[i] && array[i] < array[i + 1])
+                        lastIndex = i;
+                }
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine(lastIndex >= 0 ? $"Номер последнего элемента: {lastIndex}" : "Таких нет");
+            }
+
+            // Задача 23: Количество чисел между максимальным и минимальным
+            static void Task23()
+            {
+                Console.WriteLine("\nЗадача 23: Количество чисел между максимальным и минимальным");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                var values = array.Select(x => Convert.ToInt64(x, 2)).ToArray();
+                int maxIndex = Array.IndexOf(values, values.Max());
+                int minIndex = Array.IndexOf(values, values.Min());
+                int count = Math.Abs(maxIndex - minIndex) - 1;
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine(count > 0 ? $"Количество чисел между: {count}" : "Таких чисел нет");
+            }
+
+            // Задача 24: Циклический сдвиг вправо на одну позицию
+            static void Task24()
+            {
+                Console.WriteLine("\nЗадача 24: Циклический сдвиг вправо на одну позицию");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                string[] result = new string[array.Length];
+                for (int i = 0; i < array.Length; i++)
+                    result[i] = array[(i + 1) % array.Length];
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив после сдвига: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 25: Циклический сдвиг влево на одну позицию и сумма
+            static void Task25()
+            {
+                Console.WriteLine("\nЗадача 25: Циклический сдвиг влево на одну позицию и сумма");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                string[] result = new string[array.Length];
+                for (int i = 0; i < array.Length; i++)
+                    result[i] = array[(i + 1) % array.Length];
+                long originalSum = array.Select(x => Convert.ToInt64(x, 2)).Sum();
+                long shiftedSum = result.Select(x => Convert.ToInt64(x, 2)).Sum();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив после сдвига: [" + string.Join(", ", result) + "]");
+                Console.WriteLine($"Сумма до: {originalSum}, Сумма после: {shiftedSum}");
+            }
+
+            // Задача 26: Увеличение каждого элемента на 1010
+            static void Task26()
+            {
+                Console.WriteLine("\nЗадача 26: Увеличение каждого элемента на 1010");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+
+                long addValue = Convert.ToInt64("1010", 2);
+                string[] result = array.Select(x => Convert.ToString(Convert.ToInt64(x, 2) + addValue, 2)).ToArray();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив после увеличения: [" + string.Join(", ", result) + "]");
+            }
+
+            // Задача 27: Элемент, наиболее близкий к заданному R
+            static void Task27()
+            {
+                Console.WriteLine("\nЗадача 27: Элемент, наиболее близкий к заданному R");
+                double[] array = new double[10];
+                Console.WriteLine("Введите 10 вещественных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = double.Parse(Console.ReadLine());
+                }
+                Console.Write("Введите число R: ");
+                double r = double.Parse(Console.ReadLine());
+
+                int minDistanceIndex = 0;
+                double minDistance = Math.Abs(array[0] - r);
+                for (int i = 1; i < array.Length; i++)
+                {
+                    double distance = Math.Abs(array[i] - r);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        minDistanceIndex = i;
+                    }
+                }
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine($"Число R: {r}");
+                Console.WriteLine($"Наиболее близкий элемент: {array[minDistanceIndex]} (индекс {minDistanceIndex})");
+            }
+
+            // Задача 28: Элемент, наиболее удаленный от заданного D
+            static void Task28()
+            {
+                Console.WriteLine("\nЗадача 28: Элемент, наиболее удаленный от заданного D");
+                string[] array = new string[10];
+                Console.WriteLine("Введите 10 двоичных чисел:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = Console.ReadLine();
+                    if (array[i].Any(c => c != '0' && c != '1'))
+                    {
+                        Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                        return;
+                    }
+                }
+                Console.Write("Введите двоичное число D (только 0 и 1): ");
+                string d = Console.ReadLine();
+                if (d.Any(c => c != '0' && c != '1'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                    return;
+                }
+
+                long dValue = Convert.ToInt64(d, 2);
+                var values = array.Select(x => Convert.ToInt64(x, 2)).ToArray();
+                int maxDistanceIndex = 0;
+                long maxDistance = Math.Abs(values[0] - dValue);
+                for (int i = 1; i < values.Length; i++)
+                {
+                    long distance = Math.Abs(values[i] - dValue);
+                    if (distance > maxDistance)
+                    {
+                        maxDistance = distance;
+                        maxDistanceIndex = i;
+                    }
+                }
+                Console.WriteLine("\nМассив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine($"Число D: {d} (десятичное: {dValue})");
+                Console.WriteLine($"Наиболее удаленный элемент: {array[maxDistanceIndex]} (индекс {maxDistanceIndex})");
+            }
+
+            // Задача 29: Сумма положительного и отрицательного двоичных чисел
+            static void Task29()
+            {
+                Console.WriteLine("\nЗадача 29: Сумма положительного и отрицательного двоичных чисел");
+                Console.Write("Введите положительное двоичное число (только 0 и 1): ");
+                string posBinary = Console.ReadLine();
+                if (posBinary.Any(c => c != '0' && c != '1'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                    return;
+                }
+                Console.Write("Введите отрицательное двоичное число (только 0 и 1): ");
+                string negBinary = Console.ReadLine();
+                if (negBinary.Any(c => c != '0' && c != '1'))
+                {
+                    Console.WriteLine("Ошибка: Введите только 0 и 1!");
+                    return;
+                }
+
+                long posValue = Convert.ToInt64(posBinary, 2);
+                long negValue = -Convert.ToInt64(negBinary, 2);
+                long sum = posValue + negValue;
+                string resultBinary = Convert.ToString(Math.Abs(sum), 2);
+                Console.WriteLine($"Положительное: {posBinary} (десятичное: {posValue})");
+                Console.WriteLine($"Отрицательное: {negBinary} (десятичное: {negValue})");
+                Console.WriteLine($"Сумма: {sum} (двоичное: {resultBinary})");
+            }
+
+            // Задача 30: Перевод трех десятичных чисел в двоичную систему
+            static void Task30()
+            {
+                Console.WriteLine("\nЗадача 30: Перевод трех десятичных чисел в двоичную систему");
+                int[] array = new int[3];
+                Console.WriteLine("Введите 3 целых числа:");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write($"Элемент {i + 1}: ");
+                    array[i] = int.Parse(Console.ReadLine());
+                }
+
+                string[] result = array.Select(x => Convert.ToString(Math.Abs(x), 2)).ToArray();
+                Console.WriteLine("\nИсходный массив: [" + string.Join(", ", array) + "]");
+                Console.WriteLine("Массив в двоичной системе: [" + string.Join(", ", result) + "]");
+            }
+
+            static string ConvertFractionToBase(double fraction, int baseNum, int precision)
+            {
+                string result = "";
+                for (int i = 0; i < precision && fraction > 0; i++)
+                {
+                    fraction *= baseNum;
+                    int digit = (int)fraction;
+                    result += digit.ToString();
+                    fraction -= digit;
+                }
+                return result;
+            }
+
+            static double ConvertBinaryFraction(string fraction)
+            {
+                double result = 0;
+                for (int i = 0; i < fraction.Length; i++)
+                {
+                    if (fraction[i] == '1')
+                        result += 1.0 / Math.Pow(2, i + 1);
+                }
+                return result;
+            }
+        }
+    }
